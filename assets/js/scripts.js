@@ -10,7 +10,7 @@ $(document).ready(function () {
     e.stopPropagation();
     e.preventDefault();
     // Store search city in an array and save to local storage.
-    localStorageArray.unshift($("#search-input").val());
+    localStorageArray.push($("#search-input").val());
     console.log(localStorageArray);
     localStorage.setItem("storedArray", JSON.stringify(localStorageArray));
 
@@ -139,11 +139,23 @@ $(document).ready(function () {
     let newHRow = document.createElement("div");
     let newHbtn = document.createElement("button");
     newHRow.setAttribute("class", "row");
-    newHbtn.setAttribute("class", "btn col-12 btn-secondary text-light rounded mb-3 text-center");
+    newHbtn.setAttribute("class", "btn col-12 btn-secondary text-light rounded mb-3 text-center history-click");
     newHbtn.textContent = `${$("#search-input").val()}`;
     newHRow.appendChild(newHbtn);
     $("#history-container").append(newHRow);
     });
 
+    //loop that creates the same type of button from local history.
+    localStorageArray.forEach(item => {
+        if (localStorageArray != []) {
+            const newSHRow = document.createElement("div");
+            const newSHbtn = document.createElement("button");
+            newSHRow.setAttribute("class", "row");
+            newSHbtn.setAttribute("class", "btn col-12 btn-secondary text-light rounded mb-3 text-center history-click");
+            newSHbtn.textContent = item;
+            newSHRow.appendChild(newSHbtn);
+            $("#history-container").append(newSHRow);
+        }
+    });
 
 });
