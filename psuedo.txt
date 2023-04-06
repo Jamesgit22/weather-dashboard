@@ -1,0 +1,14 @@
+Psuedo code for javascript in project:
+
+
+- pre: wrap entire js file in a ready function.
+
+1. I need to be able to click on the search button and get the city that was typed into the text box. 
+    - I need to store the string that was searched in an array to be stored in local storage.
+    - Declaring the array as localStorageArray
+
+2. I need to check local storage for any storage searches that I can display under the search button as buttons that can be clicked to search again for updated data.
+
+3. I need to dynamically create html for the card on the right portion of the screen that will house the current day forcast information and the fay day forcast info. 
+
+4. I need to fetch informtation from an API using the name of the city that the user puts in the search box.

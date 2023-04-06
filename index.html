@@ -11,9 +11,9 @@
 <body>
     <div class="container min-vw-100 min-vh-100">
         <!-- Header -->
-        <div class="row">
-            <div class="col-12 bg-dark text-light text-center py-2 fs-2">Weather Dashboard</div>
-        </div>
+        <header class="row">
+            <div class="col-12 bg-cust-header text-light text-center py-2 fs-2">Weather Dashboard</div>
+        </header>
         <!-- Search section on the left. Hard coded to page -->
         <div class="row">
             <div class="col-3">
@@ -22,22 +22,22 @@
                         <h2 class="col-12">Search for a City:</h2>
                     </div>
                     <div class="row">
-                        <input type="text" class="col-12 rounded border-opacity-50 border-dark-subtle mb-3 fs-4"></input>
+                        <input type="text" id="search-input" class="col-12 rounded border-opacity-50 border-dark-subtle mb-3 fs-4"></input>
                     </div>
                     <div class="row">
-                        <button class="col-12 rounded btn btn-primary mb-3">Search</button>
+                        <button type="submit" id="search-btn" class="col-12 rounded btn btn-primary mb-3">Search</button>
                     </div>
                     <div class="row">
                         <div class="col-12 border-bottom border-dark mb-3"></div>
                     </div>
                     <div class="row">
-                        <div class="col-12 bg-secondary text-light rounded fs-6 p-2 text-center">Test</div>
+                        <button class="btn col-12 btn-secondary text-light rounded mb-3 text-center">Test</button>
                     </div>
                 </div>
             </div>
             <!-- HTML below will be dynamically created in javascript -->
             <!-- Current info section -->
-            <div class="col-7 my-3">
+            <div class="col-8 my-3">
                 <div class="col-12">
                     <div class="col-12 rounded border border-dark p-1">
                         <div class="row">

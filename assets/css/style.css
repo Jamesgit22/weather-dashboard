@@ -9,5 +9,5 @@
 .bg-cust-header {
     width: 100%;
     height: 100%;
-    background-image: linear-gradient(to right, red, blueg);
+    background-image: linear-gradient(to right, rgb(15, 1, 141), rgb(64, 0, 128));
 }
