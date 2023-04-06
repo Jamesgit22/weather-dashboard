@@ -129,8 +129,21 @@ $(document).ready(function () {
             </div>
         </div>
     </div>`);
-
-
-
   });
+
+
+  // Create new buttons with each search click
+  $("#search-btn").on("click", function (e) {
+    e.stopPropagation();
+    e.preventDefault()
+    let newHRow = document.createElement("div");
+    let newHbtn = document.createElement("button");
+    newHRow.setAttribute("class", "row");
+    newHbtn.setAttribute("class", "btn col-12 btn-secondary text-light rounded mb-3 text-center");
+    newHbtn.textContent = `${$("#search-input").val()}`;
+    newHRow.appendChild(newHbtn);
+    $("#history-container").append(newHRow);
+    });
+
+
 });
