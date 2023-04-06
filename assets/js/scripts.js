@@ -1,24 +1,21 @@
 // A $( document ).ready() block.
-$( document ).ready(function() {
-    console.log( "ready!" );
+$(document).ready(function () {
+  console.log("ready!");
 
+  // Check if any data is in local storage or assign empty array
+  const localStorageArray = JSON.parse(localStorage.getItem("storedArray")) || [];
 
-    // Check if any data is in local storage or assign empty array
-    const localStorageArray = JSON.parse(localStorage.getItem("localStorageArray")) || [];
+  // Listener event for the search submit
+  $("#search-btn").on("click", function (e) {
+    e.stopPropagation();
+    e.preventDefault();
+    // Store search city in an array and save to local storage.
+    localStorageArray.unshift($("#search-input").val());
+    console.log(localStorageArray);
+    localStorage.setItem("storedArray", JSON.stringify(localStorageArray));
 
-
-    // Listener event for the search submit
-    $("#search-btn").on("click", function(e) {
-        e.stopPropagation();
-        e.preventDefault();
-        // Store search city in an array and save to local storage.
-        localStorageArray.unshift($("#search-input").val())
-        console.log(localStorageArray)
-        localStorage.setItem("storedArray", JSON.stringify(localStorageArray));
-
-
-        // Dynamically create html elements to store data in info section
-        $("#info-section").html(`<div class="col-12 my-3">
+    // Dynamically create html elements to store data in info section
+    $("#info-section").html(`<div class="col-12 my-3">
         <div class="col-12">
             <div class="col-12 rounded border border-dark p-1">
                 <div class="row">
@@ -131,10 +128,9 @@ $( document ).ready(function() {
                 </div>
             </div>
         </div>
-    </div>`)
-    })
-
-    
+    </div>`);
 
 
+
+  });
 });
