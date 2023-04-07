@@ -2,15 +2,18 @@
 $(document).ready(function () {
   console.log("ready!");
 
-// might be used to pass to APIs
-    let lookUp;
-    let hQuery;
+  // might be used to pass to APIs
+  let lookUp;
+  let hQuery;
 
-//   API URLs
-    const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${$("#search-input").val()}&limit=5&appid=c664a502c1ab3dc877ac211db4a9428f`;
-    const geoHUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&limit=5&appid=c664a502c1ab3dc877ac211db4a9428f`;
+  //   API URLs
+  const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${$(
+    "#search-input"
+  ).val()}&limit=5&appid=c664a502c1ab3dc877ac211db4a9428f`;
+  const geoHUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`;
   // Check if any data is in local storage or assign empty array
-    const localStorageArray = JSON.parse(localStorage.getItem("storedArray")) || [];
+  const localStorageArray =
+    JSON.parse(localStorage.getItem("storedArray")) || [];
 
   // Listener event for the search submit
   $("#search-btn").on("click", function (e) {
@@ -136,41 +139,45 @@ $(document).ready(function () {
             </div>
         </div>
     </div>`);
-
   });
-
 
   // Create new buttons with each search click
   $("#search-btn").on("click", function (e) {
     e.stopPropagation();
-    e.preventDefault()
+    e.preventDefault();
     let newHRow = document.createElement("div");
     let newHbtn = document.createElement("button");
     newHRow.setAttribute("class", "row");
-    newHbtn.setAttribute("class", "btn col-12 btn-secondary text-light rounded mb-3 text-center history-click");
+    newHbtn.setAttribute(
+      "class",
+      "btn col-12 btn-secondary text-light rounded mb-3 text-center history-click"
+    );
     newHbtn.textContent = `${$("#search-input").val()}`;
     newHRow.appendChild(newHbtn);
     $("#history-container").append(newHRow);
-    });
+  });
 
-    //loop that creates the same type of button from local history.
-    localStorageArray.forEach(item => {
-        if (localStorageArray != []) {
-            const newSHRow = document.createElement("div");
-            const newSHbtn = document.createElement("button");
-            newSHRow.setAttribute("class", "row");
-            newSHbtn.setAttribute("class", "btn col-12 btn-secondary text-light rounded mb-3 text-center history-click");
-            newSHbtn.textContent = item;
-            newSHRow.appendChild(newSHbtn);
-            $("#history-container").append(newSHRow);
-        }
-    });
+  //loop that creates the same type of button from local history.
+  localStorageArray.forEach((item) => {
+    if (localStorageArray != []) {
+      const newSHRow = document.createElement("div");
+      const newSHbtn = document.createElement("button");
+      newSHRow.setAttribute("class", "row");
+      newSHbtn.setAttribute(
+        "class",
+        "btn col-12 btn-secondary text-light rounded mb-3 text-center history-click"
+      );
+      newSHbtn.textContent = item;
+      newSHRow.appendChild(newSHbtn);
+      $("#history-container").append(newSHRow);
+    }
+  });
 
-    // Add event delegation listener for historical buttons
-    $("#history-container").on("click", ".history-click", function(e){
-        e.stopPropagation();
-        // Create HTML content
-        $("#info-section").html(`<div class="col-12 my-3">
+  // Add event delegation listener for historical buttons
+  $("#history-container").on("click", ".history-click", function (e) {
+    e.stopPropagation();
+    // Create HTML content
+    $("#info-section").html(`<div class="col-12 my-3">
         <div class="col-12">
             <div class="col-12 rounded border border-dark p-1">
                 <div class="row">
@@ -284,13 +291,31 @@ $(document).ready(function () {
             </div>
         </div>
     </div>`);
-    
-    })
+  });
 
-    $("#history-container").on("click", ".history-click", function(e){
-        e.stopPropagation();
-        hQuery = e.target.textContent;
+  // function to get latitude and longitude of city search
+  $("#history-container").on("click", ".history-click", function (e) {
+    e.stopPropagation();
+    hQuery = e.target.textContent;
+    logHistJSONData();
+  });
 
-        
-    });
+  // function to fetch geo API
+  async function logHistJSONData() {
+    const response = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`
+    );
+    const jsonData = await response.json();
+    console.log(jsonData[0].lat);
+    console.log(jsonData[0].lon);
+    const histBtnLat = jsonData[0].lat;
+    const histBtnLon = jsonData[0].lon;
+  }
+
+  async function logHistJSONData() {
+    const response = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`
+    );
+    const jsonData = await response.json();
+  }
 });
