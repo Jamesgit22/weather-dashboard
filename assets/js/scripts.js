@@ -5,12 +5,11 @@ $(document).ready(function () {
   // might be used to pass to APIs
   let lookUp;
   let hQuery;
+  let histBtnLat;
+  let histBtnLon;
 
   //   API URLs
-  const geoUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${$(
-    "#search-input"
-  ).val()}&limit=5&appid=c664a502c1ab3dc877ac211db4a9428f`;
-  const geoHUrl = `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`;
+
   // Check if any data is in local storage or assign empty array
   const localStorageArray =
     JSON.parse(localStorage.getItem("storedArray")) || [];
@@ -297,25 +296,27 @@ $(document).ready(function () {
   $("#history-container").on("click", ".history-click", function (e) {
     e.stopPropagation();
     hQuery = e.target.textContent;
-    logHistJSONData();
+    logHistGeoJSONData();
   });
 
   // function to fetch geo API
-  async function logHistJSONData() {
+  async function logHistGeoJSONData() {
     const response = await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`
     );
     const jsonData = await response.json();
     console.log(jsonData[0].lat);
     console.log(jsonData[0].lon);
-    const histBtnLat = jsonData[0].lat;
-    const histBtnLon = jsonData[0].lon;
+    histBtnLat = jsonData[0].lat;
+    histBtnLon = jsonData[0].lon;
+    logHistForeJSONData();
   }
 
-  async function logHistJSONData() {
+  async function logHistForeJSONData() {
     const response = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`
+      `http://api.openweathermap.org/data/2.5/forecast?lat=${histBtnLat}&lon=${histBtnLon}&appid=c664a502c1ab3dc877ac211db4a9428f`
     );
     const jsonData = await response.json();
+    console.log(jsonData);
   }
 });
