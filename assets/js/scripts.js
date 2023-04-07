@@ -25,7 +25,7 @@ $(document).ready(function () {
     localStorage.setItem("storedArray", JSON.stringify(localStorageArray));
 
     // Dynamically create html elements to store data in info section
-    createHistHTML() 
+    
   });
 
   // Create new buttons with each search click
@@ -60,13 +60,7 @@ $(document).ready(function () {
     }
   });
 
-  // Add event delegation listener for historical buttons
-  $("#history-container").on("click", ".history-click", function (e) {
-    e.stopPropagation();
-    // Create HTML content
-  });
-
-  // function to get latitude and longitude of city search
+  // function to get latitude and longitude of city search when historical search is used
   $("#history-container").on("click", ".history-click", function (e) {
     e.stopPropagation();
     hQuery = e.target.textContent;
@@ -80,32 +74,38 @@ $(document).ready(function () {
       `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`
     );
     const jsonData = await response.json();
-    // console.log(jsonData[0].lat);
-    // console.log(jsonData[0].lon);
     histBtnLat = jsonData[0].lat;
     histBtnLon = jsonData[0].lon;
     logHistForeJSONData();
   }
 
-//   Funciton to fetch 
+
+
   async function logHistForeJSONData() {
     const response = await fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?lat=${histBtnLat}&lon=${histBtnLon}&appid=c664a502c1ab3dc877ac211db4a9428f`
+      `http://api.openweathermap.org/data/2.5/forecast?lat=${histBtnLat}&lon=${histBtnLon}&appid=c664a502c1ab3dc877ac211db4a9428f&units=imperial`
     );
     const jsonData = await response.json();
-    // console.log(jsonData);
-    // console.log(jsonData.list[0].dt);
-    // console.log(jsonData.list[1].dt);
-    jsonDataDateConv.push(jsonData.list[0].dt);
-    jsonDataDateConv.push(jsonData.list[1].dt);
-    jsonDataDateConv.push(jsonData.list[2].dt);
-    jsonDataDateConv.push(jsonData.list[3].dt);
-    jsonDataDateConv.push(jsonData.list[4].dt);
-    jsonDataDateConv.push(jsonData.list[5].dt);
-    return jsonData;
+    const weatherDataUnfilt = [];
+  
+    jsonData.list.forEach((data) => {
+      const weatherObj = {
+        checkDate: dayjs.unix(data.dt).format("D"),
+        date: dayjs.unix(data.dt).format("M/D/YYYY"),
+        temp: data.main.temp,
+        icon: data.weather[0].icon,
+        windSpeed: data.wind.speed,
+        humidity: data.main.humidity
+      };
+      weatherDataUnfilt.push(weatherObj);
+    });
+    console.log(weatherDataUnfilt)
+    createHistHTML() 
+    
   }
 
-  console.log(jsonDataDateConv);
+ 
+  
 
   function createHistHTML() {
     $("#info-section").html(`<div class="col-12 my-3">
