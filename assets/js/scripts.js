@@ -8,7 +8,7 @@ $(document).ready(function () {
   let histBtnLat;
   let histBtnLon;
   let jsonDataDateConv = [];
-  const filteredArray = [];
+  let filteredArray = [];
 
   //   API URLs
 
@@ -104,6 +104,7 @@ $(document).ready(function () {
     console.log(filteredArray);
     histDataFill();
     
+    
   }
 
   function filterWeatherData(array) {
@@ -118,53 +119,37 @@ $(document).ready(function () {
   }
 // Fill in data from API for a historical button search
   function histDataFill () {
-    $("#current-day-city").textContent = `${hQuery}`;
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
-    // $("")
+    document.querySelector("#current-day-city").textContent = `${hQuery} ${filteredArray[0].date}`;
+    document.querySelector("#icon").textContent = filteredArray[0].icon;
+    document.querySelector("#degrees").textContent = filteredArray[0].temp;
+    document.querySelector("#wind-speed").textContent = filteredArray[0].windSpeed;
+    document.querySelector("#humidity").textContent = filteredArray[0].humidity;
+    document.querySelector("#fcast-one-date").textContent = filteredArray[1].date;
+    document.querySelector("#icon-f-1").textContent = filteredArray[1].icon;
+    document.querySelector("#degrees-f-1").textContent = filteredArray[1].temp;
+    document.querySelector("#wind-speed-f-1").textContent = filteredArray[1].windSpeed;
+    document.querySelector("#humidity-f-1").textContent = filteredArray[1].humidity;
+    document.querySelector("#fcast-two-date").textContent = filteredArray[2].date;
+    document.querySelector("#icon-f-2").textContent = filteredArray[2].icon;
+    document.querySelector("#degrees-f-2").textContent = filteredArray[2].temp;
+    document.querySelector("#wind-speed-f-2").textContent = filteredArray[2].windSpeed;
+    document.querySelector("#humidity-f-2").textContent = filteredArray[2].humidity;
+    document.querySelector("#fcast-three-date").textContent = filteredArray[3].date;
+    document.querySelector("#icon-f-3").textContent = filteredArray[3].icon;
+    document.querySelector("#degrees-f-3").textContent = filteredArray[3].temp;
+    document.querySelector("#wind-speed-f-3").textContent = filteredArray[3].windSpeed;
+    document.querySelector("#humidity-f-3").textContent = filteredArray[3].humidity;
+    document.querySelector("#fcast-four-date").textContent = filteredArray[4].date;
+    document.querySelector("#icon-f-4").textContent = filteredArray[4].icon;
+    document.querySelector("#degrees-f-4").textContent = filteredArray[4].temp;
+    document.querySelector("#wind-speed-f-4").textContent = filteredArray[4].windSpeed;
+    document.querySelector("#humidity-f-4").textContent = filteredArray[4].humidity;
+    document.querySelector("#fcast-five-date").textContent = filteredArray[5].date;
+    document.querySelector("#icon-f-5").textContent = filteredArray[5].icon;
+    document.querySelector("#degrees-f-5").textContent = filteredArray[5].temp;
+    document.querySelector("#wind-speed-f-5").textContent = filteredArray[5].windSpeed;
+    document.querySelector("#humidity-f-5").textContent = filteredArray[5].humidity;
+    filteredArray = [];
   }
 
   function createHistHTML() {
@@ -172,9 +157,13 @@ $(document).ready(function () {
     <div class="col-12">
         <div class="col-12 rounded border border-dark p-1">
             <div class="row">
-                <div id="current-day-city" class="col-2 fs-3 fw-bold"></div>
-                <div class="col-10 fs-3 fw-bold">(04/05/2023)</div>
+                <div class="col-12 fs-3 fw-bold">
+                  <h1 id="current-day-city"></h1>
+                </div>  
             </div>
+            <div class="row">
+                        <div class="col-12 py-1"><span id="icon"></span></div>
+                    </div>
             <div class="row">
                 <div class="col-12 py-3">Temp: <span id="degrees"></span> ^F</div>
             </div>
@@ -195,7 +184,7 @@ $(document).ready(function () {
             <div class="row justify-content-between">
                 <div class="col-2 p-1 bg-cust-forecast text-light">
                     <div class="row">
-                        <div class="col-12 fw-bold">4/6/2023</div>
+                        <div id="fcast-one-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1"><span id="icon-f-1"></span></div>
@@ -212,7 +201,7 @@ $(document).ready(function () {
                 </div>
                 <div class="col-2 p-1 bg-cust-forecast text-light">
                     <div class="row">
-                        <div class="col-12 fw-bold">4/6/2023</div>
+                        <div id="fcast-two-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1"><span id="icon-f-2"></span></div>
@@ -229,7 +218,7 @@ $(document).ready(function () {
                 </div>
                 <div class="col-2 p-1 bg-cust-forecast text-light">
                     <div class="row">
-                        <div class="col-12 fw-bold">4/6/2023</div>
+                        <div id="fcast-three-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1"><span id="icon-f-3"></span></div>
@@ -246,7 +235,7 @@ $(document).ready(function () {
                 </div>
                 <div class="col-2 p-1 bg-cust-forecast text-light">
                     <div class="row">
-                        <div class="col-12 fw-bold">4/6/2023</div>
+                        <div id="fcast-four-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1"><span id="icon-f-4"></span></div>
@@ -263,7 +252,7 @@ $(document).ready(function () {
                 </div>
                 <div class="col-2 p-1 bg-cust-forecast text-light">
                     <div class="row">
-                        <div class="col-12 fw-bold">4/6/2023</div>
+                        <div id="fcast-five-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1"><span id="icon-f-5"></span></div>
