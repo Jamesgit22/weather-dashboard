@@ -11,3 +11,7 @@
     height: 100%;
     background-image: linear-gradient(to right, rgb(15, 1, 141), rgb(64, 0, 128));
 }
+
+.icon-size {
+    height: 40px;
+}

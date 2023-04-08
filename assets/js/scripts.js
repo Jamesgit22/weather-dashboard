@@ -110,7 +110,7 @@ $(document).ready(function () {
     e.stopPropagation();
     hQuery = e.target.textContent;
     logHistGeoJSONData();
-    createHistHTML();
+    createHTML();
   });
 
   // function to fetch geo API with historical search city
@@ -167,47 +167,89 @@ $(document).ready(function () {
     document.querySelector("#current-day-city").textContent = `${$(
       "#search-input"
     ).val()} ${filteredArray[0].date}`;
-    document.querySelector("#icon").textContent = filteredArray[0].icon;
-    document.querySelector("#degrees").textContent = filteredArray[0].temp;
+    document
+      .querySelector("#icon")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[0].icon}@2x.png`
+      );
+    document.querySelector("#degrees").textContent = Math.round(
+      filteredArray[0].temp
+    );
     document.querySelector("#wind-speed").textContent =
       filteredArray[0].windSpeed;
     document.querySelector("#humidity").textContent = filteredArray[0].humidity;
     document.querySelector("#fcast-one-date").textContent =
       filteredArray[1].date;
-    document.querySelector("#icon-f-1").textContent = filteredArray[1].icon;
-    document.querySelector("#degrees-f-1").textContent = filteredArray[1].temp;
+    document
+      .querySelector("#icon-f-1")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[1].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-1").textContent = Math.round(
+      filteredArray[1].temp
+    );
     document.querySelector("#wind-speed-f-1").textContent =
       filteredArray[1].windSpeed;
     document.querySelector("#humidity-f-1").textContent =
       filteredArray[1].humidity;
     document.querySelector("#fcast-two-date").textContent =
       filteredArray[2].date;
-    document.querySelector("#icon-f-2").textContent = filteredArray[2].icon;
-    document.querySelector("#degrees-f-2").textContent = filteredArray[2].temp;
+    document
+      .querySelector("#icon-f-2")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[2].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-2").textContent = Math.round(
+      filteredArray[2].temp
+    );
     document.querySelector("#wind-speed-f-2").textContent =
       filteredArray[2].windSpeed;
     document.querySelector("#humidity-f-2").textContent =
       filteredArray[2].humidity;
     document.querySelector("#fcast-three-date").textContent =
       filteredArray[3].date;
-    document.querySelector("#icon-f-3").textContent = filteredArray[3].icon;
-    document.querySelector("#degrees-f-3").textContent = filteredArray[3].temp;
+    document
+      .querySelector("#icon-f-3")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[3].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-3").textContent = Math.round(
+      filteredArray[3].temp
+    );
     document.querySelector("#wind-speed-f-3").textContent =
       filteredArray[3].windSpeed;
     document.querySelector("#humidity-f-3").textContent =
       filteredArray[3].humidity;
     document.querySelector("#fcast-four-date").textContent =
       filteredArray[4].date;
-    document.querySelector("#icon-f-4").textContent = filteredArray[4].icon;
-    document.querySelector("#degrees-f-4").textContent = filteredArray[4].temp;
+    document
+      .querySelector("#icon-f-4")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[4].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-4").textContent = Math.round(
+      filteredArray[4].temp
+    );
     document.querySelector("#wind-speed-f-4").textContent =
       filteredArray[4].windSpeed;
     document.querySelector("#humidity-f-4").textContent =
       filteredArray[4].humidity;
     document.querySelector("#fcast-five-date").textContent =
       filteredArray[5].date;
-    document.querySelector("#icon-f-5").textContent = filteredArray[5].icon;
-    document.querySelector("#degrees-f-5").textContent = filteredArray[5].temp;
+    document
+      .querySelector("#icon-f-5")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[5].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-5").textContent = Math.round(
+      filteredArray[5].temp
+    );
     document.querySelector("#wind-speed-f-5").textContent =
       filteredArray[5].windSpeed;
     document.querySelector("#humidity-f-5").textContent =
@@ -219,47 +261,89 @@ $(document).ready(function () {
     document.querySelector(
       "#current-day-city"
     ).textContent = `${hQuery} ${filteredArray[0].date}`;
-    document.querySelector("#icon").textContent = filteredArray[0].icon;
-    document.querySelector("#degrees").textContent = filteredArray[0].temp;
+    document
+      .querySelector("#icon")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[0].icon}@2x.png`
+      );
+    document.querySelector("#degrees").textContent = Math.round(
+      filteredArray[0].temp
+    );
     document.querySelector("#wind-speed").textContent =
       filteredArray[0].windSpeed;
     document.querySelector("#humidity").textContent = filteredArray[0].humidity;
     document.querySelector("#fcast-one-date").textContent =
       filteredArray[1].date;
-    document.querySelector("#icon-f-1").textContent = filteredArray[1].icon;
-    document.querySelector("#degrees-f-1").textContent = filteredArray[1].temp;
+    document
+      .querySelector("#icon-f-1")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[1].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-1").textContent = Math.round(
+      filteredArray[1].temp
+    );
     document.querySelector("#wind-speed-f-1").textContent =
       filteredArray[1].windSpeed;
     document.querySelector("#humidity-f-1").textContent =
       filteredArray[1].humidity;
     document.querySelector("#fcast-two-date").textContent =
       filteredArray[2].date;
-    document.querySelector("#icon-f-2").textContent = filteredArray[2].icon;
-    document.querySelector("#degrees-f-2").textContent = filteredArray[2].temp;
+    document
+      .querySelector("#icon-f-2")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[2].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-2").textContent = Math.round(
+      filteredArray[2].temp
+    );
     document.querySelector("#wind-speed-f-2").textContent =
       filteredArray[2].windSpeed;
     document.querySelector("#humidity-f-2").textContent =
       filteredArray[2].humidity;
     document.querySelector("#fcast-three-date").textContent =
       filteredArray[3].date;
-    document.querySelector("#icon-f-3").textContent = filteredArray[3].icon;
-    document.querySelector("#degrees-f-3").textContent = filteredArray[3].temp;
+    document
+      .querySelector("#icon-f-3")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[3].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-3").textContent = Math.round(
+      filteredArray[3].temp
+    );
     document.querySelector("#wind-speed-f-3").textContent =
       filteredArray[3].windSpeed;
     document.querySelector("#humidity-f-3").textContent =
       filteredArray[3].humidity;
     document.querySelector("#fcast-four-date").textContent =
       filteredArray[4].date;
-    document.querySelector("#icon-f-4").textContent = filteredArray[4].icon;
-    document.querySelector("#degrees-f-4").textContent = filteredArray[4].temp;
+    document
+      .querySelector("#icon-f-4")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[4].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-4").textContent = Math.round(
+      filteredArray[4].temp
+    );
     document.querySelector("#wind-speed-f-4").textContent =
       filteredArray[4].windSpeed;
     document.querySelector("#humidity-f-4").textContent =
       filteredArray[4].humidity;
     document.querySelector("#fcast-five-date").textContent =
       filteredArray[5].date;
-    document.querySelector("#icon-f-5").textContent = filteredArray[5].icon;
-    document.querySelector("#degrees-f-5").textContent = filteredArray[5].temp;
+    document
+      .querySelector("#icon-f-5")
+      .setAttribute(
+        "src",
+        `https://openweathermap.org/img/wn/${filteredArray[5].icon}@2x.png`
+      );
+    document.querySelector("#degrees-f-5").textContent = Math.round(
+      filteredArray[5].temp
+    );
     document.querySelector("#wind-speed-f-5").textContent =
       filteredArray[5].windSpeed;
     document.querySelector("#humidity-f-5").textContent =
@@ -278,10 +362,12 @@ $(document).ready(function () {
                 </div>  
             </div>
             <div class="row">
-                        <div class="col-12 py-1"><span id="icon"></span></div>
+                        <div class="col-12 py-1">
+                          <img id="icon"></img> 
+                        </div>
                     </div>
             <div class="row">
-                <div class="col-12 py-3">Temp: <span id="degrees"></span> ^F</div>
+                <div class="col-12 py-3">Temp: <span id="degrees"></span> °F</div>
             </div>
             <div class="row">
                 <div class="col-12 py-3">Wind: <span id="wind-speed"></span> MPH</div>
@@ -303,10 +389,12 @@ $(document).ready(function () {
                         <div id="fcast-one-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1"><span id="icon-f-1"></span></div>
+                        <div class="col-12">
+                          <img id="icon-f-1" class="icon-size"></img>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1">Temp: <span id="degrees-f-1"></span> ^F</div>
+                        <div class="col-12 py-1">Temp: <span id="degrees-f-1"></span> °F</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1">Wind: <span id="wind-speed-f-1"></span> MPH</div>
@@ -320,10 +408,12 @@ $(document).ready(function () {
                         <div id="fcast-two-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1"><span id="icon-f-2"></span></div>
+                        <div class="col-12">
+                          <img id="icon-f-2" class="icon-size"></img>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1">Temp: <span id="degrees-f-2"></span> ^F</div>
+                        <div class="col-12 py-1">Temp: <span id="degrees-f-2"></span> °F</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1">Wind: <span id="wind-speed-f-2"></span> MPH</div>
@@ -337,10 +427,12 @@ $(document).ready(function () {
                         <div id="fcast-three-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1"><span id="icon-f-3"></span></div>
+                        <div class="col-12">
+                          <img id="icon-f-3" class="icon-size"></img>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1">Temp: <span id="degrees-f-3"></span> ^F</div>
+                        <div class="col-12 py-1">Temp: <span id="degrees-f-3"></span> °F</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1">Wind: <span id="wind-speed-f-3"></span> MPH</div>
@@ -354,10 +446,12 @@ $(document).ready(function () {
                         <div id="fcast-four-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1"><span id="icon-f-4"></span></div>
+                        <div class="col-12">
+                        <img id="icon-f-4" class="icon-size"></img>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1">Temp: <span id="degrees-f-4"></span> ^F</div>
+                        <div class="col-12 py-1">Temp: <span id="degrees-f-4"></span> °F</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1">Wind: <span id="wind-speed-f-4"></span> MPH</div>
@@ -371,10 +465,12 @@ $(document).ready(function () {
                         <div id="fcast-five-date" class="col-12 fw-bold">4/6/2023</div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1"><span id="icon-f-5"></span></div>
+                        <div class="col-12">
+                        <img id="icon-f-5" class="icon-size"></img>
+                        </div>
                     </div>
                     <div class="row">
-                        <div class="col-12 py-1">Temp: <span id="degrees-f-5"></span> ^F</div>
+                        <div class="col-12 py-1">Temp: <span id="degrees-f-5"></span> °F</div>
                     </div>
                     <div class="row">
                         <div class="col-12 py-1">Wind: <span id="wind-speed-f-5"></span> MPH</div>
