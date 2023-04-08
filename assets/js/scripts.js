@@ -8,6 +8,7 @@ $(document).ready(function () {
   let histBtnLat;
   let histBtnLon;
   let jsonDataDateConv = [];
+  const filteredArray = [];
 
   //   API URLs
 
@@ -25,7 +26,6 @@ $(document).ready(function () {
     localStorage.setItem("storedArray", JSON.stringify(localStorageArray));
 
     // Dynamically create html elements to store data in info section
-    
   });
 
   // Create new buttons with each search click
@@ -79,15 +79,14 @@ $(document).ready(function () {
     logHistForeJSONData();
   }
 
-
-
+  //   Function to fetch weather data from lat an lon
   async function logHistForeJSONData() {
     const response = await fetch(
       `http://api.openweathermap.org/data/2.5/forecast?lat=${histBtnLat}&lon=${histBtnLon}&appid=c664a502c1ab3dc877ac211db4a9428f&units=imperial`
     );
     const jsonData = await response.json();
     const weatherDataUnfilt = [];
-  
+
     jsonData.list.forEach((data) => {
       const weatherObj = {
         checkDate: dayjs.unix(data.dt).format("D"),
@@ -95,17 +94,77 @@ $(document).ready(function () {
         temp: data.main.temp,
         icon: data.weather[0].icon,
         windSpeed: data.wind.speed,
-        humidity: data.main.humidity
+        humidity: data.main.humidity,
       };
       weatherDataUnfilt.push(weatherObj);
     });
-    console.log(weatherDataUnfilt)
-    createHistHTML() 
+    console.log(weatherDataUnfilt);
+    createHistHTML();
+    filterWeatherData(weatherDataUnfilt);
+    console.log(filteredArray);
     
   }
 
- 
-  
+  function filterWeatherData(array) {
+    for (let i = 0; i < array.length; i++) {
+      if (i === array.length - 1) {
+        filteredArray.push(array[i]);
+      } else if (array[i].checkDate !== array[i + 1].checkDate) {
+        filteredArray.push(array[i]);
+      }
+    }
+    return filteredArray;
+  }
+
+  function histDataFill () {
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+    $("")
+  }
 
   function createHistHTML() {
     $("#info-section").html(`<div class="col-12 my-3">
