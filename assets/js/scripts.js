@@ -102,6 +102,7 @@ $(document).ready(function () {
     createHistHTML();
     filterWeatherData(weatherDataUnfilt);
     console.log(filteredArray);
+    histDataFill();
     
   }
 
@@ -115,55 +116,55 @@ $(document).ready(function () {
     }
     return filteredArray;
   }
-
+// Fill in data from API for a historical button search
   function histDataFill () {
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
-    $("")
+    $("#current-day-city").textContent = `${hQuery}`;
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
+    // $("")
   }
 
   function createHistHTML() {
@@ -171,7 +172,7 @@ $(document).ready(function () {
     <div class="col-12">
         <div class="col-12 rounded border border-dark p-1">
             <div class="row">
-                <div class="col-2 fs-3 fw-bold">Orlando</div>
+                <div id="current-day-city" class="col-2 fs-3 fw-bold"></div>
                 <div class="col-10 fs-3 fw-bold">(04/05/2023)</div>
             </div>
             <div class="row">
