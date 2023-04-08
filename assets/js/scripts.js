@@ -2,15 +2,12 @@
 $(document).ready(function () {
   console.log("ready!");
 
-  // might be used to pass to APIs
-  let lookUp;
   let hQuery;
   let histBtnLat;
   let histBtnLon;
-  let jsonDataDateConv = [];
   let filteredArray = [];
-
-  //   API URLs
+  let newBtnLat;
+  let newBtnLon;
 
   // Check if any data is in local storage or assign empty array
   const localStorageArray =
@@ -20,29 +17,77 @@ $(document).ready(function () {
   $("#search-btn").on("click", function (e) {
     e.stopPropagation();
     e.preventDefault();
-    // Store search city in an array and save to local storage.
-    localStorageArray.push($("#search-input").val());
-    console.log(localStorageArray);
-    localStorage.setItem("storedArray", JSON.stringify(localStorageArray));
-
-    // Dynamically create html elements to store data in info section
+    if ($("#search-input").val() !== "") {
+      // Store search city in an array and save to local storage.
+      localStorageArray.push($("#search-input").val());
+      console.log(localStorageArray);
+      localStorage.setItem("storedArray", JSON.stringify(localStorageArray));
+    } else {
+      alert("Please enter a city");
+      return;
+    }
   });
 
   // Create new buttons with each search click
   $("#search-btn").on("click", function (e) {
     e.stopPropagation();
     e.preventDefault();
-    let newHRow = document.createElement("div");
-    let newHbtn = document.createElement("button");
-    newHRow.setAttribute("class", "row");
-    newHbtn.setAttribute(
-      "class",
-      "btn col-12 btn-secondary text-light rounded mb-3 text-center history-click"
-    );
-    newHbtn.textContent = `${$("#search-input").val()}`;
-    newHRow.appendChild(newHbtn);
-    $("#history-container").append(newHRow);
+    if ($("#search-input").val() !== "") {
+      let newHRow = document.createElement("div");
+      let newHbtn = document.createElement("button");
+      newHRow.setAttribute("class", "row");
+      newHbtn.setAttribute(
+        "class",
+        "btn col-12 btn-secondary text-light rounded mb-3 text-center history-click"
+      );
+      newHbtn.textContent = `${$("#search-input").val()}`;
+      newHRow.appendChild(newHbtn);
+      $("#history-container").append(newHRow);
+      logNewGeoJSONData();
+    } else {
+      alert("Please enter a city");
+      return;
+    }
   });
+
+  // function to fetch geo API with new search city
+  async function logNewGeoJSONData() {
+    const response = await fetch(
+      `http://api.openweathermap.org/geo/1.0/direct?q=${$(
+        "#search-input"
+      ).val()}&appid=c664a502c1ab3dc877ac211db4a9428f`
+    );
+    const jsonData = await response.json();
+    newBtnLat = jsonData[0].lat;
+    newBtnLon = jsonData[0].lon;
+    logNewForeJSONData();
+  }
+
+  //   Function to fetch weather data from New City lat an lon
+  async function logNewForeJSONData() {
+    const response = await fetch(
+      `http://api.openweathermap.org/data/2.5/forecast?lat=${newBtnLat}&lon=${newBtnLon}&appid=c664a502c1ab3dc877ac211db4a9428f&units=imperial`
+    );
+    const jsonData = await response.json();
+    const weatherDataUnfilt = [];
+
+    jsonData.list.forEach((data) => {
+      const weatherObj = {
+        checkDate: dayjs.unix(data.dt).format("D"),
+        date: dayjs.unix(data.dt).format("M/D/YYYY"),
+        temp: data.main.temp,
+        icon: data.weather[0].icon,
+        windSpeed: data.wind.speed,
+        humidity: data.main.humidity,
+      };
+      weatherDataUnfilt.push(weatherObj);
+    });
+    console.log(weatherDataUnfilt);
+    createHTML();
+    filterWeatherData(weatherDataUnfilt);
+    console.log(filteredArray);
+    newDataFill();
+  }
 
   //loop that creates the same type of button from local history.
   localStorageArray.forEach((item) => {
@@ -68,7 +113,7 @@ $(document).ready(function () {
     createHistHTML();
   });
 
-  // function to fetch geo API
+  // function to fetch geo API with historical search city
   async function logHistGeoJSONData() {
     const response = await fetch(
       `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`
@@ -99,14 +144,13 @@ $(document).ready(function () {
       weatherDataUnfilt.push(weatherObj);
     });
     console.log(weatherDataUnfilt);
-    createHistHTML();
+    createHTML();
     filterWeatherData(weatherDataUnfilt);
     console.log(filteredArray);
     histDataFill();
-    
-    
   }
 
+  // Check if there are duplicate days in the returned weather data and push to new array
   function filterWeatherData(array) {
     for (let i = 0; i < array.length; i++) {
       if (i === array.length - 1) {
@@ -117,42 +161,114 @@ $(document).ready(function () {
     }
     return filteredArray;
   }
-// Fill in data from API for a historical button search
-  function histDataFill () {
-    document.querySelector("#current-day-city").textContent = `${hQuery} ${filteredArray[0].date}`;
+
+  // Fill in data from API for a historical button search
+  function newDataFill() {
+    document.querySelector("#current-day-city").textContent = `${$(
+      "#search-input"
+    ).val()} ${filteredArray[0].date}`;
     document.querySelector("#icon").textContent = filteredArray[0].icon;
     document.querySelector("#degrees").textContent = filteredArray[0].temp;
-    document.querySelector("#wind-speed").textContent = filteredArray[0].windSpeed;
+    document.querySelector("#wind-speed").textContent =
+      filteredArray[0].windSpeed;
     document.querySelector("#humidity").textContent = filteredArray[0].humidity;
-    document.querySelector("#fcast-one-date").textContent = filteredArray[1].date;
+    document.querySelector("#fcast-one-date").textContent =
+      filteredArray[1].date;
     document.querySelector("#icon-f-1").textContent = filteredArray[1].icon;
     document.querySelector("#degrees-f-1").textContent = filteredArray[1].temp;
-    document.querySelector("#wind-speed-f-1").textContent = filteredArray[1].windSpeed;
-    document.querySelector("#humidity-f-1").textContent = filteredArray[1].humidity;
-    document.querySelector("#fcast-two-date").textContent = filteredArray[2].date;
+    document.querySelector("#wind-speed-f-1").textContent =
+      filteredArray[1].windSpeed;
+    document.querySelector("#humidity-f-1").textContent =
+      filteredArray[1].humidity;
+    document.querySelector("#fcast-two-date").textContent =
+      filteredArray[2].date;
     document.querySelector("#icon-f-2").textContent = filteredArray[2].icon;
     document.querySelector("#degrees-f-2").textContent = filteredArray[2].temp;
-    document.querySelector("#wind-speed-f-2").textContent = filteredArray[2].windSpeed;
-    document.querySelector("#humidity-f-2").textContent = filteredArray[2].humidity;
-    document.querySelector("#fcast-three-date").textContent = filteredArray[3].date;
+    document.querySelector("#wind-speed-f-2").textContent =
+      filteredArray[2].windSpeed;
+    document.querySelector("#humidity-f-2").textContent =
+      filteredArray[2].humidity;
+    document.querySelector("#fcast-three-date").textContent =
+      filteredArray[3].date;
     document.querySelector("#icon-f-3").textContent = filteredArray[3].icon;
     document.querySelector("#degrees-f-3").textContent = filteredArray[3].temp;
-    document.querySelector("#wind-speed-f-3").textContent = filteredArray[3].windSpeed;
-    document.querySelector("#humidity-f-3").textContent = filteredArray[3].humidity;
-    document.querySelector("#fcast-four-date").textContent = filteredArray[4].date;
+    document.querySelector("#wind-speed-f-3").textContent =
+      filteredArray[3].windSpeed;
+    document.querySelector("#humidity-f-3").textContent =
+      filteredArray[3].humidity;
+    document.querySelector("#fcast-four-date").textContent =
+      filteredArray[4].date;
     document.querySelector("#icon-f-4").textContent = filteredArray[4].icon;
     document.querySelector("#degrees-f-4").textContent = filteredArray[4].temp;
-    document.querySelector("#wind-speed-f-4").textContent = filteredArray[4].windSpeed;
-    document.querySelector("#humidity-f-4").textContent = filteredArray[4].humidity;
-    document.querySelector("#fcast-five-date").textContent = filteredArray[5].date;
+    document.querySelector("#wind-speed-f-4").textContent =
+      filteredArray[4].windSpeed;
+    document.querySelector("#humidity-f-4").textContent =
+      filteredArray[4].humidity;
+    document.querySelector("#fcast-five-date").textContent =
+      filteredArray[5].date;
     document.querySelector("#icon-f-5").textContent = filteredArray[5].icon;
     document.querySelector("#degrees-f-5").textContent = filteredArray[5].temp;
-    document.querySelector("#wind-speed-f-5").textContent = filteredArray[5].windSpeed;
-    document.querySelector("#humidity-f-5").textContent = filteredArray[5].humidity;
+    document.querySelector("#wind-speed-f-5").textContent =
+      filteredArray[5].windSpeed;
+    document.querySelector("#humidity-f-5").textContent =
+      filteredArray[5].humidity;
+    filteredArray = [];
+  }
+  // Fill in data from API for a historical button search
+  function histDataFill() {
+    document.querySelector(
+      "#current-day-city"
+    ).textContent = `${hQuery} ${filteredArray[0].date}`;
+    document.querySelector("#icon").textContent = filteredArray[0].icon;
+    document.querySelector("#degrees").textContent = filteredArray[0].temp;
+    document.querySelector("#wind-speed").textContent =
+      filteredArray[0].windSpeed;
+    document.querySelector("#humidity").textContent = filteredArray[0].humidity;
+    document.querySelector("#fcast-one-date").textContent =
+      filteredArray[1].date;
+    document.querySelector("#icon-f-1").textContent = filteredArray[1].icon;
+    document.querySelector("#degrees-f-1").textContent = filteredArray[1].temp;
+    document.querySelector("#wind-speed-f-1").textContent =
+      filteredArray[1].windSpeed;
+    document.querySelector("#humidity-f-1").textContent =
+      filteredArray[1].humidity;
+    document.querySelector("#fcast-two-date").textContent =
+      filteredArray[2].date;
+    document.querySelector("#icon-f-2").textContent = filteredArray[2].icon;
+    document.querySelector("#degrees-f-2").textContent = filteredArray[2].temp;
+    document.querySelector("#wind-speed-f-2").textContent =
+      filteredArray[2].windSpeed;
+    document.querySelector("#humidity-f-2").textContent =
+      filteredArray[2].humidity;
+    document.querySelector("#fcast-three-date").textContent =
+      filteredArray[3].date;
+    document.querySelector("#icon-f-3").textContent = filteredArray[3].icon;
+    document.querySelector("#degrees-f-3").textContent = filteredArray[3].temp;
+    document.querySelector("#wind-speed-f-3").textContent =
+      filteredArray[3].windSpeed;
+    document.querySelector("#humidity-f-3").textContent =
+      filteredArray[3].humidity;
+    document.querySelector("#fcast-four-date").textContent =
+      filteredArray[4].date;
+    document.querySelector("#icon-f-4").textContent = filteredArray[4].icon;
+    document.querySelector("#degrees-f-4").textContent = filteredArray[4].temp;
+    document.querySelector("#wind-speed-f-4").textContent =
+      filteredArray[4].windSpeed;
+    document.querySelector("#humidity-f-4").textContent =
+      filteredArray[4].humidity;
+    document.querySelector("#fcast-five-date").textContent =
+      filteredArray[5].date;
+    document.querySelector("#icon-f-5").textContent = filteredArray[5].icon;
+    document.querySelector("#degrees-f-5").textContent = filteredArray[5].temp;
+    document.querySelector("#wind-speed-f-5").textContent =
+      filteredArray[5].windSpeed;
+    document.querySelector("#humidity-f-5").textContent =
+      filteredArray[5].humidity;
     filteredArray = [];
   }
 
-  function createHistHTML() {
+  // Create HTML to input weather data
+  function createHTML() {
     $("#info-section").html(`<div class="col-12 my-3">
     <div class="col-12">
         <div class="col-12 rounded border border-dark p-1">
