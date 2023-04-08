@@ -53,7 +53,7 @@ $(document).ready(function () {
   // function to fetch geo API with new search city
   async function logNewGeoJSONData() {
     const response = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${$(
+      `https://api.openweathermap.org/geo/1.0/direct?q=${$(
         "#search-input"
       ).val()}&appid=c664a502c1ab3dc877ac211db4a9428f`
     );
@@ -66,7 +66,7 @@ $(document).ready(function () {
   //   Function to fetch weather data from New City lat an lon
   async function logNewForeJSONData() {
     const response = await fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?lat=${newBtnLat}&lon=${newBtnLon}&appid=c664a502c1ab3dc877ac211db4a9428f&units=imperial`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${newBtnLat}&lon=${newBtnLon}&appid=c664a502c1ab3dc877ac211db4a9428f&units=imperial`
     );
     const jsonData = await response.json();
     const weatherDataUnfilt = [];
@@ -116,7 +116,7 @@ $(document).ready(function () {
   // function to fetch geo API with historical search city
   async function logHistGeoJSONData() {
     const response = await fetch(
-      `http://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`
+      `https://api.openweathermap.org/geo/1.0/direct?q=${hQuery}&appid=c664a502c1ab3dc877ac211db4a9428f`
     );
     const jsonData = await response.json();
     histBtnLat = jsonData[0].lat;
@@ -127,7 +127,7 @@ $(document).ready(function () {
   //   Function to fetch weather data from lat an lon
   async function logHistForeJSONData() {
     const response = await fetch(
-      `http://api.openweathermap.org/data/2.5/forecast?lat=${histBtnLat}&lon=${histBtnLon}&appid=c664a502c1ab3dc877ac211db4a9428f&units=imperial`
+      `https://api.openweathermap.org/data/2.5/forecast?lat=${histBtnLat}&lon=${histBtnLon}&appid=c664a502c1ab3dc877ac211db4a9428f&units=imperial`
     );
     const jsonData = await response.json();
     const weatherDataUnfilt = [];
